@@ -131,21 +131,6 @@ steps:
          '/workspace/components/kubeflow/deployer']
   id: 'buildDeployer'
   waitFor: ["-"]
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: '/bin/bash'
-  args: ['-c', 'cd /workspace/components/kubeflow/launcher && ./build_image.sh -p $PROJECT_ID -t $COMMIT_SHA']
-  id: 'buildLauncher'
-  waitFor: ["-"]
-- id: 'buildCpuTrainer'
-  name: 'gcr.io/cloud-builders/docker'
-  entrypoint: '/bin/bash'
-  args: ['-c', 'cd /workspace/components/kubeflow/dnntrainer && ./build_image.sh -p $PROJECT_ID -t $COMMIT_SHA -l ml-pipeline-kubeflow-tf-trainer -b 2.3.0']
-  waitFor: ["-"]
-- name: 'gcr.io/cloud-builders/docker'
-  entrypoint: '/bin/bash'
-  args: ['-c', 'cd /workspace/components/kubeflow/dnntrainer && ./build_image.sh -p $PROJECT_ID -t $COMMIT_SHA -l ml-pipeline-kubeflow-tf-trainer-gpu -b 2.3.0-gpu']
-  id: 'buildGpuTrainer'
-  waitFor: ["-"]
 
 # Build the Dataproc-based pipeline component images
 - name: 'gcr.io/cloud-builders/docker'
